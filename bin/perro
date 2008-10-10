@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby -wKU
+
+require "fileutils"
+
+name = ARGV[0]
+current_path = File.expand_path( "." )
+
+FileUtils::mkdir( "#{current_path}/#{name}" ) unless File.exists? "#{current_path}/#{name}"
+FileUtils::mkdir( "#{current_path}/#{name}/css" ) unless File.exists? "#{current_path}/#{name}/css"
+FileUtils::mkdir( "#{current_path}/#{name}/javascript" ) unless File.exists? "#{current_path}/#{name}/javascript"
+
+File.open( "#{current_path}/#{name}/server.rb" , "w" ) do |f|
+  f.puts %Q[require "perro"
+server = Perro::Server.new(3000)
+server.static( "/js" , "#{current_path}/#{name}/javascript")
+server.static( "/css" , "#{current_path}/#{name}/css")
+server.haml( "/" , "#{current_path}/#{name}" )
+server.start
+  ]
+end
+File.open( "#{current_path}/#{name}/index.haml" , "w" ) do |f|
+  f.puts %Q[!!! Strict 
+%html 
+  %head
+    %meta{ "http-equiv" => 'Content-Type', :content => 'text/html;charset=utf-8' } 
+    %title Perro server index file
+  %body 
+    #header 
+      %h1 perro likes #{name}
+    #paper
+    = javascript_include_tag []
+    :javascript    
+]
+end
