@@ -1,7 +1,12 @@
-require "haml"
-require "mongrel"
-require 'action_controller'
+begin
+  require 'action_controller'
+rescue
+  puts "It appears that you don't have action_controller."
+  puts "`sudo gem install rails` might help you with that."
+end
+
 require "open-uri"
+require "mongrel"
 
 ActionView::Base.helper_modules.each {|m| include m }
 
@@ -53,7 +58,7 @@ module Perro
       config.join
     end
   end
-  
+
   Server.route_manager( :static , Mongrel::DirHandler )
 end
 

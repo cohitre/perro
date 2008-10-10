@@ -24,9 +24,12 @@ help with that if asked nicely.
 
 == SYNOPSIS:
 
+require "rubygems"
+require "perro"
+
 HOME_FOLDER = File.expand_path( "~" )
 
-server = Perro::Server.new(3000)
+server = Perro::Server.new(3001)
 server.static( "/javascripts" , "#{HOME_FOLDER}/libs/javascript")
 server.sass( "/stylesheets" , "#{HOME_FOLDER}/libs/sass")
 server.proxy( "/service" , "http://example.com" )

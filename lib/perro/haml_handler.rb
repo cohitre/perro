@@ -1,3 +1,5 @@
+require "haml"
+
 module Perro
 
   class HAMLHandler < Mongrel::HttpHandler
