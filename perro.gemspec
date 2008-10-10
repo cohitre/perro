@@ -1,4 +1,3 @@
-(in /Users/carlos/Projects/perro)
 Gem::Specification.new do |s|
   s.name = %q{perro}
   s.version = "0.6.0"
