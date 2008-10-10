@@ -1,5 +1,3 @@
-require "rubygems"
-require "yaml"
 require "haml"
 require "mongrel"
 require 'action_controller'
