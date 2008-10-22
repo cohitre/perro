@@ -9,7 +9,9 @@ module Perro
     def process request , response
       response.start(200) do |head,out|
         head['Content-Type'] = 'text/html'
-        out.write( open(@url + request.params["PATH_INFO"]).read )
+
+        query = request.params["QUERY_STRING"].empty? ? "" : "?" + request.params["QUERY_STRING"]
+        out.write( open(@url + request.params["PATH_INFO"] + query ).read )
       end
     end
   end
