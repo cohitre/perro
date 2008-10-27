@@ -3,7 +3,6 @@ Manifest.txt
 README.txt
 Rakefile
 lib/perro.rb
-lib/perro/haml_handler.rb
-lib/perro/proxy_handler.rb
-lib/perro/sass_handler.rb
+lib/perro/route.rb
 test/test_perro.rb
+test/sample.rb

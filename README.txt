@@ -26,21 +26,30 @@ help with that if asked nicely.
 
 require "rubygems"
 require "perro"
+require "sass"
+require "open-uri"
 
 HOME_FOLDER = File.expand_path( "~" )
 
-server = Perro::Server.new(3001)
-server.static( "/javascripts" , "#{HOME_FOLDER}/libs/javascript")
-server.sass( "/stylesheets" , "#{HOME_FOLDER}/libs/sass")
-server.proxy( "/service" , "http://example.com" )
-server.haml( "/" , "#{File.expand_path(".")}/" )
+server = Perro::Server.new(3000)
+
+server.get "/javascripts/:file" do |params|
+  open( "#{HOME_FOLDER}/libs/javascript#{params[:file]}" ).read
+end
+
+server.get "/stylesheets/:file.css" do |params|
+  Sass::Engine.new( open("#{HOME_FOLDER}#{params[:file]}.sass").read )
+end
+
+server.get "/proxy" do |params|
+  open( "http://cohitre.com/#{params[:path]}" )
+end
+
 server.start
 
 == REQUIREMENTS:
 
 mongrel
-haml
-
 
 == INSTALL:
 
