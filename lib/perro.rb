@@ -74,13 +74,8 @@ module Perro
       @port = port
     end
 
-    def static( route , path , mime=:html)
-      mimetypes = {
-        :html => "text/html" ,
-        :javascript => "text/javascript" ,
-        :css => "text/css"
-      }
-      self.get( route , mimetypes[mime] ) do |params|
+    def static( route , path , mime=:html)      
+      self.get( route , mime ) do |params|
         if params[:file].nil?
           open( "#{path}" ).read
         else
@@ -111,7 +106,21 @@ module Perro
 
 
     def get route , mime="text/html" , &block
-      @global_handler.push( { :route => route , :mime=>mime } , block )
+      mimetypes = {
+        :html => "text/html" ,
+        :js  => "text/javascript",
+        :css => "text/css"  ,
+        :png => "image/png" ,
+        :gif => "image/gif" ,
+        :jpg => "image/jpeg"
+      }
+      
+      if ( mime.is_a? Symbol)
+        type = mimetypes[mime]
+      else
+        type = mime
+      end      
+      @global_handler.push( { :route => route , :mime=>type } , block )
     end
 
     def run
