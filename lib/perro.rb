@@ -4,12 +4,12 @@ require "haml"
 require "sass"
 
 module Perro
-  VERSION = '0.9.0'
+  VERSION = '0.9.1'
 
   def use_rails_helpers
     begin
       require 'action_controller'
-      ActionView::Base.helper_modules.each {|m| include m }  
+      ActionView::Base.helper_modules.each {|m| include m }
     rescue
       puts "It appears that you don't have action_controller."
       puts "`sudo gem install rails` might help you with that."
@@ -43,7 +43,7 @@ module Perro
           out.write( "404 error" )
         end
       else
-        
+
         route = handler[:route_object]
 
         form_params = {}
@@ -51,7 +51,7 @@ module Perro
           pair = d.split("=")
           form_params.merge!( {pair[0].to_sym => pair[1] })
         end
-        
+
         user_params = route.match( uri ).merge( form_params ).merge({
           :path => request.params["PATH_INFO"]
         })
@@ -68,7 +68,7 @@ module Perro
 
   class Server
     attr_reader :path
-    
+
     def initialize port=3000
       @global_handler = StringHandler.new()
       @port = port
@@ -76,12 +76,16 @@ module Perro
 
     def static( route , path , mime=:html)
       mimetypes = {
-        :html => "text/html" , 
-        :javascript => "text/javascript" , 
+        :html => "text/html" ,
+        :javascript => "text/javascript" ,
         :css => "text/css"
       }
       self.get( route , mimetypes[mime] ) do |params|
-        open( "#{path}/#{params[:file]}" ).read
+        if params[:file].nil?
+          open( "#{path}" ).read
+        else
+          open( "#{path}/#{params[:file]}" ).read
+        end
       end
     end
 
@@ -94,7 +98,7 @@ module Perro
         end
       end
     end
-    
+
     def sass( route , path )
       self.get( route , "text/css") do |params|
         if File.exists?( path ) && !File.directory?( path )
@@ -109,36 +113,26 @@ module Perro
     def get route , mime="text/html" , &block
       @global_handler.push( { :route => route , :mime=>mime } , block )
     end
-    
+
     def run
       routes = @global_handler
       port = @port
-      config = Mongrel::Configurator.new :host => "0.0.0.0" do
-        listener :port => port do
-          uri("/" , :handler => routes )
-        end
-        run
-      end
-      puts '** Perro Server Started'
-      puts '** Woof Woof'
-      puts "** Listening to port #{@port}"
-      
-    end
-    
-    def start
-      routes = @global_handler
-      port = @port
-      config = Mongrel::Configurator.new :host => "0.0.0.0" do
-        listener :port => port do
-          uri("/" , :handler => routes )
-        end
-        run
-      end
-      puts '** Perro Server Started'
-      puts '** Woof Woof'
-      puts "** Listening to port #{@port}"
-      puts '** Use CTRL-C to stop.'
 
+      puts '** Perro Server Started'
+      config = Mongrel::Configurator.new :host => "0.0.0.0" do
+        listener :port => port do
+          uri("/" , :handler => routes )
+        end
+        run
+      end
+      puts '** Woof Woof'
+      puts "** Listening to port #{@port}"
+      config
+    end
+
+    def start
+      config = self.run
+      puts '** Use CTRL-C to stop.'
       config.join
     end
   end

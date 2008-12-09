@@ -53,7 +53,7 @@ mongrel
 
 == INSTALL:
 
-"sudo gem install perro" may work...
+"sudo gem install cohitre-perro" may work...
 
 == LICENSE:
 

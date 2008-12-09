@@ -1,16 +1,16 @@
-# -*- encoding: utf-8 -*-
-
 Gem::Specification.new do |s|
   s.name = %q{perro}
-  s.version = "0.9.0"
+  s.version = "0.9.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["carlos"]
-  s.date = %q{2008-11-22}
+  s.date = %q{2008-12-08}
+  s.default_executable = %q{perro.rb}
   s.description = %q{Perro is a light server built on top of mongrel that helps at least  one developer be happy. If it had been designed as production server  it would have a cooler name. Like "Dinosaur" or "Freckle".  The Internet is a global system of interconnected computer networks.  Developer creates files that are served through this global system.  Developer may be tempted to develop such files by creating a folder,  moving the files to such folder, double clicking them and watching  what happens on the browser whose address bar reads  "file:///Users/cohitre/development/my-project/index.html".  Perro helps developer be happy by helping overcome temptation.}
   s.email = ["carlosrr@gmail.com"]
+  s.executables = ["perro.rb"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
-  s.files = ["History.txt", "Manifest.txt", "README.txt", "Rakefile", "lib/perro.rb", "lib/perro/route.rb", "test/test_perro.rb", "test/sample.rb"]
+  s.files = ["History.txt", "Manifest.txt", "README.txt", "Rakefile", "assets/index.haml", "assets/server.rb", "assets/javascripts/jquery.js", "assets/javascripts/qunit.js", "assets/stylesheets/qunit.css", "assets/stylesheets/reset.css", "bin/perro.rb", "lib/perro.rb", "lib/perro/route.rb", "test/test_perro.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://code.cohitre.com}
   s.rdoc_options = ["--main", "README.txt"]

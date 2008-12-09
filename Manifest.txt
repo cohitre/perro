@@ -2,7 +2,14 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
+assets/index.haml
+assets/server.rb
+assets/javascripts/jquery.js
+assets/javascripts/qunit.js
+assets/stylesheets/qunit.css
+assets/stylesheets/reset.css
+bin/perro
 lib/perro.rb
 lib/perro/route.rb
 test/test_perro.rb
-test/sample.rb
+
