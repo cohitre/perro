@@ -4,7 +4,7 @@ require "haml"
 require "sass"
 
 module Perro
-  VERSION = '0.9.1'
+  VERSION = '0.9.2'
 
   def use_rails_helpers
     begin
